@@ -18,7 +18,7 @@ const sallyObj = {
   job: "Principal Engineer",
 };
 
-describe.skip("this binding", () => {
+describe("this binding", () => {
   const sallyGreeting = personGreeting.bind(sallyObj);
   const chadGreeting = personGreeting.bind(chadObj);
   it("returns a new function with `this` explicitly set", () => {
@@ -27,7 +27,7 @@ describe.skip("this binding", () => {
   });
 });
 
-describe.skip("personSmallTalk", () => {
+describe("personSmallTalk", () => {
   it("calls the function with `this` explicitly set and accepts comma separated arguments", () => {
     expect(personSmallTalk.call(sallyObj, "pizza", "movies")).toEqual(
       `My name is Sally and I am a Principal Engineer and like pizza and movies`
@@ -39,7 +39,7 @@ describe.skip("personSmallTalk", () => {
   });
 });
 
-describe.skip("listHobbies", () => {
+describe("listHobbies", () => {
   it("calls a function with `this` explicitly set and arguments passed as an array", () => {
     expect(
       listHobbies.apply(sallyObj, ["horseback riding", "catching squirrels"])
@@ -59,7 +59,7 @@ describe.skip("listHobbies", () => {
   });
 });
 
-describe.skip("Function.prototype.myBind", () => {
+describe("Function.prototype.myBind", () => {
   const funcThatNeedsThis = function (arg1, arg2) {
     return `${this.name} is ${arg1} and ${arg2}`;
   };
@@ -74,7 +74,7 @@ describe.skip("Function.prototype.myBind", () => {
   });
 });
 
-describe.skip("Function.prototype.myApply", () => {
+describe("Function.prototype.myApply", () => {
   const funcThatNeedsThis = function (arg1, arg2) {
     return `${this.name} likes ${arg1} and ${arg2}`;
   };
