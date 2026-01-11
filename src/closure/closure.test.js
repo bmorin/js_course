@@ -1,6 +1,6 @@
 const { once, addFactory, personWithPrivateProperties } = require("./closure");
 
-describe.skip("once", () => {
+describe("once", () => {
   it("returns a function that can only be called once", () => {
     const greetingFunc = (greeting) => {
       return greeting;
@@ -25,11 +25,11 @@ describe.skip("once", () => {
     onceifiedFunction(...args);
     onceifiedFunction(...args);
     onceifiedFunction(...args);
-    expect(mockFunc).toBeCalledTimes(1);
+    expect(mockFunc).toHaveBeenCalledTimes(1);
   });
 });
 
-describe.skip("addFactory", () => {
+describe("addFactory", () => {
   it("returns a function initialized with a number to add", () => {
     const add4 = addFactory(4);
 
@@ -38,7 +38,7 @@ describe.skip("addFactory", () => {
     expect(add4(3)).toEqual(7);
   });
 });
-describe.skip("personWithPrivateProperties", () => {
+describe("personWithPrivateProperties", () => {
   it("does not allow access to the person`s account balance or bankInfo", () => {
     const person = personWithPrivateProperties();
     expect(person.accountBalance).toEqual(undefined);

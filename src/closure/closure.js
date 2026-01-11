@@ -1,12 +1,21 @@
 /* 
     Write a function that returns a function that can only be called once
     e.g. const myFunc = once(() => {console.log('yo')})
-    myFunc() -> 'yo'
+    myFunc() -> 'Hey Bro'
     myFunc() -> undefined
     myFunc() -> undefined
 */
 
-const once = (callback) => {};
+const once = (callback) => {
+  let called = false;
+  return (...args) => {
+    if (!called) {
+      called = true;
+      return callback(...args);
+    }
+    return undefined;
+  };
+};
 
 /* 
     Write a function that returns a function that take an initial number
@@ -18,7 +27,11 @@ const once = (callback) => {};
     add2(3) -> 5
 */
 
-const addFactory = (initialNum) => {};
+const addFactory = (initialNum) => {
+  return (numToAdd) => {
+    return initialNum + numToAdd;
+  };
+};
 
 /* 
     Our person has some sensitive information exposed below
@@ -29,22 +42,24 @@ const addFactory = (initialNum) => {};
 */
 
 const personWithPrivateProperties = () => {
+  // Private variables in closure scope
+  let accountBalance = -5;
+  let bankInfo = { name: "Bank of Venezuela", sensitiveId: "BV123" };
+
   return {
     age: 10,
     job: "Pizza Driver",
-    accountBalance: -5,
-    bankInfo: { name: "Bank of Venezuela", sensitiveId: "BV123" },
-    updateBank: () => {
-      //your code here
+    updateBank: (newBankInfo) => {
+      bankInfo = newBankInfo;
     },
     getBankInfo: () => {
-      //your code here
+      return bankInfo.name;
     },
     getAccountBalance: () => {
-      //your code here
+      return accountBalance;
     },
-    updateAccountBalance: () => {
-      //your code here
+    updateAccountBalance: (amountToAdd) => {
+      accountBalance += amountToAdd;
     },
   };
 };
