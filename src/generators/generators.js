@@ -5,7 +5,9 @@
  * @returns {iterator} ex: {value: 1, done: false}
  */
 function* forLoopGenerator(intial) {
-    // your code here
+    for (let i = intial; i > 0; i--) {
+        yield i;
+    }
 }
 
 /**
@@ -14,7 +16,10 @@ function* forLoopGenerator(intial) {
  * @returns {iterator} ex: {value: 1231234, done: false}
  */
 function* generateRandomId() {
-    // your code here
+    for (let i = 1; ; i++) { // Allow 0 to be used as a sentinel value
+        // Unsure if this should be a random number or just a unique number
+        yield i;
+    }
 }
 
 module.exports = {

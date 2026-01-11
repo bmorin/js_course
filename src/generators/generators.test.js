@@ -1,6 +1,6 @@
 const { generateRandomId, forLoopGenerator } = require('./generators');
 
-describe.skip('forLoopGenerator', () => {
+describe('forLoopGenerator', () => {
     it('initializes a loop starting at the initial number', () => {
         const looper = forLoopGenerator(10);
 
@@ -11,7 +11,7 @@ describe.skip('forLoopGenerator', () => {
     });
 });
 
-describe.skip('generateRandomId', () => {
+describe('generateRandomId', () => {
     it('generates a random id', () => {
         const idGenerator = generateRandomId();
         const idMap = new Set();
