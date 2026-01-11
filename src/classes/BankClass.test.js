@@ -1,6 +1,6 @@
 const { Bank } = require("./BankClass");
 
-describe.skip("BankClass", () => {
+describe("BankClass", () => {
   const myBank = new Bank(0);
   it("has a static method to create routing numbers", () => {
     expect(typeof Bank.createRoutingNumber).toBe("function");
