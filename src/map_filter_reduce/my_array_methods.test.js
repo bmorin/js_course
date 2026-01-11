@@ -1,7 +1,7 @@
 require("./my_array_methods");
 const { addAllNumbers } = require("./my_array_methods");
 
-describe.skip("myArrayMethods", () => {
+describe("myArrayMethods", () => {
   it("filters an array", () => {
     const arrayWithOddNums = [1, 2, 3, 4, 5, 6, 7, 8];
 
