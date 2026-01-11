@@ -34,44 +34,165 @@
 </div>
 
 <script>
-    /* 
-        TODO:
-        Update the code here to make the snake game work
-        The snake should be able to change directions
-        There should always be an apple present within the board
-        If the snake eats an apple, a new apple should be randomly placed on the board
-        Every time an apple is "eaten" - a point should be added to the score
-        Starting the game over should reset the points, move the snake back to its original positions and clear all apples
-    */
+    const GRID_SIZE = 10;
+    const GRID_TOTAL = GRID_SIZE * GRID_SIZE;
+
+    const DIRECTION = {
+        RIGHT: 1,
+        LEFT: -1,
+        DOWN: GRID_SIZE,
+        UP: -GRID_SIZE
+    };
+
     const grid = document.getElementById('grid');
     let pts = 0;
+    let snake = [2, 1, 0]; // starting position of snake
+    let direction = DIRECTION.RIGHT; // start moving right
+    let appleIndex = 0;
+    let intervalTime = 1000;
+    let speed = 0.9;
+    let intervalId = null;
 
     const startGameBtn = document.getElementById('startGame');
+    const upBtn = document.getElementById('up');
+    const downBtn = document.getElementById('down');
+    const leftBtn = document.getElementById('left');
+    const rightBtn = document.getElementById('right');
+    const ptsDisplay = document.getElementById('pts');
 
     const createBoard = () => {
-        for (let i = 0; i < 100; i++) {
-            const div = document.createElement('div');
-            div.classList.add('grid-space');
-            grid.appendChild(div);
+        // Only create board if it doesn't exist
+        if (grid.children.length === 0) {
+            for (let i = 0; i < GRID_TOTAL; i++) {
+                const div = document.createElement('div');
+                div.classList.add('grid-space');
+                grid.appendChild(div);
+            }
         }
     };
-    // create board
+
+    // Create board on load
+    createBoard();
+
+    // Direction buttons
+    upBtn.addEventListener('click', () => {
+        if (direction !== DIRECTION.DOWN) direction = DIRECTION.UP; // prevent going back on itself
+    });
+
+    downBtn.addEventListener('click', () => {
+        if (direction !== DIRECTION.UP) direction = DIRECTION.DOWN; // prevent going back on itself
+    });
+
+    leftBtn.addEventListener('click', () => {
+        if (direction !== DIRECTION.RIGHT) direction = DIRECTION.LEFT; // prevent going back on itself
+    });
+
+    rightBtn.addEventListener('click', () => {
+        if (direction !== DIRECTION.LEFT) direction = DIRECTION.RIGHT; // prevent going back on itself
+    });
+
+    // Keyboard controls
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowUp' && direction !== DIRECTION.DOWN) direction = DIRECTION.UP;
+        if (e.key === 'ArrowDown' && direction !== DIRECTION.UP) direction = DIRECTION.DOWN;
+        if (e.key === 'ArrowLeft' && direction !== DIRECTION.RIGHT) direction = DIRECTION.LEFT;
+        if (e.key === 'ArrowRight' && direction !== DIRECTION.LEFT) direction = DIRECTION.RIGHT;
+    });
 
     startGameBtn.addEventListener('click', () => {
-        // add your code here
         startGame();
     });
 
     const startGame = () => {
+        // Clear interval if already running
+        if (intervalId) clearInterval(intervalId);
+
+        // Ensure board exists
         createBoard();
+
+        // Reset game state
+        snake = [0, 1, 2];
+        direction = DIRECTION.RIGHT;
+        pts = 0;
+        intervalTime = 1000;
+        ptsDisplay.textContent = pts;
 
         const allGridElems = document.querySelectorAll('.grid-space');
 
-        // add any code you need to start the game
-        // like setting the direction or helper functions to eat an apple
+        // Clear the board
+        allGridElems.forEach(elem => {
+            elem.classList.remove('snaky', 'apple');
+        });
 
-        const moveSnake = setInterval(() => {
-            // add code here to move snake
-        }, 1000);
+        // Draw initial snake
+        snake.forEach(index => allGridElems[index].classList.add('snaky'));
+
+        // Generate first apple
+        generateApple(allGridElems);
+
+        // Start game loop
+        intervalId = setInterval(() => {
+            moveSnake(allGridElems);
+        }, intervalTime);
+    };
+
+    const moveSnake = (allGridElems) => {
+        // Calculate new head position
+        let head = snake[snake.length - 1];
+        let newHead = head + direction;
+
+        // Check for wall collisions
+        if (
+            (head % GRID_SIZE === GRID_SIZE - 1 && direction === DIRECTION.RIGHT) || // hitting right wall
+            (head % GRID_SIZE === 0 && direction === DIRECTION.LEFT) || // hitting left wall
+            newHead < 0 || // hitting top wall
+            newHead >= GRID_TOTAL // hitting bottom wall
+        ) {
+            gameOver();
+            return;
+        }
+
+        // Check for self collision
+        if (allGridElems[newHead].classList.contains('snaky')) {
+            gameOver();
+            return;
+        }
+
+        // Add new head
+        snake.push(newHead);
+        allGridElems[newHead].classList.add('snaky');
+
+        // Check if apple is eaten
+        if (newHead === appleIndex) {
+            allGridElems[appleIndex].classList.remove('apple');
+            pts++;
+            ptsDisplay.textContent = pts;
+            generateApple(allGridElems);
+            // Speed up the game
+            clearInterval(intervalId);
+            intervalTime *= speed;
+            intervalId = setInterval(() => {
+                moveSnake(allGridElems);
+            }, intervalTime);
+        } else {
+            // Remove tail if no apple eaten
+            let tail = snake.shift();
+            allGridElems[tail].classList.remove('snaky');
+        }
+    };
+
+    const generateApple = (allGridElems) => {
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * GRID_TOTAL);
+        } while (allGridElems[randomIndex].classList.contains('snaky'));
+
+        appleIndex = randomIndex;
+        allGridElems[appleIndex].classList.add('apple');
+    };
+
+    const gameOver = () => {
+        clearInterval(intervalId);
+        alert(`Game Over! Your score: ${pts}`);
     };
 </script>
