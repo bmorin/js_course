@@ -6,7 +6,7 @@ const {
   myPromiseAll,
 } = require("./promises");
 
-describe.skip("getDataPromiseChain", () => {
+describe("getDataPromiseChain", () => {
   it("returns an object with name, age and job", () => {
     getDataPromiseChain().then((res) => {
       expect(res).toStrictEqual({
@@ -18,7 +18,7 @@ describe.skip("getDataPromiseChain", () => {
   });
 });
 
-describe.skip("getData", () => {
+describe("getData", () => {
   it("returns an object with name, age and job", async () => {
     const data = await getData();
     expect(data).toStrictEqual({
@@ -29,7 +29,7 @@ describe.skip("getData", () => {
   });
 });
 
-describe.skip("handleMultiplePromises", () => {
+describe("handleMultiplePromises", () => {
   it("returns an array of objects returned from a set of promises", async () => {
     const [promise1, promise2, promise3] = [
       fakeApiCall({ name: "Jill" }),
@@ -47,7 +47,7 @@ describe.skip("handleMultiplePromises", () => {
   });
 });
 
-describe.skip("implements promise all", () => {
+describe("implements promise all", () => {
   it("returns an array of responses returned from a set of promises", async () => {
     const apiCall1 = new Promise((resolve) => {
       setTimeout(() => {
