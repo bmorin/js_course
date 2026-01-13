@@ -5,7 +5,18 @@
  * @returns {array} ex: [1,2,3,4,5]
  */
 const myFlatMap = (arr) => {
-    // your code here
+    let result = [];
+    const flatten = (input) => {
+        for (let i = 0; i < input.length; i++) {
+            if (Array.isArray(input[i])) {
+                flatten(input[i]);
+            } else {
+                result.push(input[i]);
+            }
+        }
+    };
+    flatten(arr);
+    return result;
 };
 
 /**
@@ -16,7 +27,13 @@ const myFlatMap = (arr) => {
  * @returns {array} ex: [1,2,3]
  */
 const myConcat = (arr, ...values) => {
-    // your code here
+    let result = arr.slice();
+    for (let i = 0; i < values.length; i++) {
+        for (let j = 0; j < values[i].length; j++) {
+            result.push(values[i][j]);
+        }
+    }
+    return result;
 };
 
 /**
@@ -27,7 +44,13 @@ const myConcat = (arr, ...values) => {
  * @returns {array}
  */
 const myReject = (arr, itemToReject) => {
-    // your code here
+    let result = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] !== itemToReject) {
+            result.push(arr[i]);
+        }
+    }
+    return result;
 };
 
 module.exports = {
