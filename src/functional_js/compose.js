@@ -4,7 +4,11 @@
  * @returns {function} a function that takes in an argument and passes it through all the functions
  */
 const composeFunctions = (...fns) => {
-	// TODO: make a compose function that takes in a list of functions and returns a function that takes in an argument and passes it through all the functions
+	return (arg) => {
+		return fns.reduce((acc, fn) => {
+			return fn(acc);
+		}, arg);
+	};
 };
 
 /**
@@ -14,19 +18,17 @@ const composeFunctions = (...fns) => {
  * @returns {*} the transformed item in its original shape
  */
 const transforms = (item) => {
-	// TODO: make these function pure (no side effects)
 	const removeJob = (obj) => {
-		delete obj.job;
-		return obj;
+		const { job, ...rest } = obj;
+		return rest;
 	};
-	const addName = (obj) => {
-		obj.name = obj.name.toLocaleUpperCase();
 
-		return obj;
+	const addName = (obj) => {
+		return { ...obj, name: obj.name.toLocaleUpperCase() };
 	};
+
 	const updateAge = (obj) => {
-		obj.age = Number(obj.age);
-		return obj;
+		return { ...obj, age: Number(obj.age) };
 	};
 
 	const fns = [removeJob, addName, updateAge];
