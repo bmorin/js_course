@@ -1,6 +1,6 @@
 const { composeFunctions, transforms } = require('./compose');
 
-describe.skip('composeFunctions', () => {
+describe('composeFunctions', () => {
 	it('returns a function that takes in an argument and passes it through all the functions', () => {
 		const add4 = (num) => num + 4;
 		const multiplyBy2 = (num) => num * 2;
@@ -20,7 +20,7 @@ describe.skip('composeFunctions', () => {
 	});
 });
 
-describe.skip('transforms', () => {
+describe('transforms', () => {
 	it('transforms an item using a list of functions', () => {
 		const item = {
 			name: 'heather',
