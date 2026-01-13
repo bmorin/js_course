@@ -28,7 +28,7 @@ class PubSub {
 class Singleton {
   constructor() {
     if (Singleton.instance) {
-      return Singleton.instance;
+      throw new Error("Cannot create another instance");
     }
     Singleton.instance = this;
   }

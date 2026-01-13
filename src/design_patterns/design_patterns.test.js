@@ -1,6 +1,6 @@
 const { PubSub, Singleton } = require("./design_patterns");
 
-describe.skip("design patterns", () => {
+describe("design patterns", () => {
   describe("observer", () => {
     it("should publish and subscribe to events", () => {
       const pubsub = new PubSub();
